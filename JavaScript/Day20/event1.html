@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Events</title>
+    <style>
+        p {
+            background-color: aqua;
+            color: red;
+            font-size: 30px;
+        }
+
+        .box {
+            background-color: red;
+            color: yellow;
+            border: 2px solid black;
+            width: 250px;
+            height: 200px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Hello I am Paragraph</p>
+    <div class="box">
+
+        I am Box
+    </div>
+
+    <script>
+        const p = document.querySelector("p");
+        const div = document.querySelector(".box")
+
+
+        p.addEventListener("click", () => {
+            let oldBg = p.style.backgroundColor;
+            p.style.backgroundColor = "Purple";
+            setTimeout(() => {
+
+                p.style.backgroundColor = oldBg;
+            }, 2000)
+            console.log("Para was clicked");
+        });
+
+        const oldTextBox = div.textContent;
+        div.addEventListener("mouseenter", () => {
+            div.textContent = "Mouse is inside box";
+        })
+        div.addEventListener("mouseleave", () => {
+            div.textContent = oldTextBox;
+        })
+
+
+
+    </script>
+
+</body>
+
+</html>

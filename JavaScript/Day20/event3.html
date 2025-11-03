@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this in dom event listener</title>
+
+</head>
+
+<body>
+
+    <h1>this on h1</h1>
+    <h3>this on h3</h3>
+    <p>I am para where this will be demonstrated</p>
+    <button>I am Button</button>
+</body>
+
+<script>
+    const colors = ["red", "orange", "yellow", "green", "blue", "purple", "crimson"];
+    // 0 - 6 => length 7
+    function changeColor() {
+        console.log(`Click event occur on ${this}`);
+        console.dir(this)
+        let id = setInterval(() => {
+            let randomIndex = Math.floor(Math.random() * colors.length)
+            this.style.backgroundColor = colors[randomIndex];
+
+        }, 500);
+
+        setInterval(() => {
+            clearInterval(id)
+            this.style.backgroundColor = "white";
+
+        }, 10000);
+
+    }
+
+    const h1 = document.querySelector("h1");
+    const h3 = document.querySelector("h3");
+    const p = document.querySelector("p");
+    const button = document.querySelector("button");
+
+    h1.addEventListener("click", changeColor);
+    h3.addEventListener("click", changeColor);
+    p.addEventListener("click", changeColor);
+    button.addEventListener("click", changeColor);
+
+
+</script>
+
+</html>
