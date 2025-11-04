@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data App</title>
+
+    <style>
+        .delete {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>My App</h1>
+    <form action="/demo">
+        <input type="text" placeholder="Enter your data" id="">
+        <br>
+        <br>
+        <input type="submit" value="save">
+    </form>
+
+
+    <p class="msg"></p>
+    <ul>
+
+        <li>Tata <button class="delete">Delete Value</button></li>
+        <li>Demo <button class="delete">Delete Value</button></li>
+    </ul>
+
+    <script>
+        let form = document.querySelector("form");
+        let allElemnts = form.elements;
+        let msg = document.querySelector(".msg");
+        let ul = document.querySelector("ul");
+        let data = allElemnts[0];
+        let allData = [];
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let list = document.createElement("li");
+            let dataValue = data.value;
+            if (dataValue.trim().length !== 0) {
+                // operations -> add to list as well as store in array
+                if (!allData.includes(data.value)) {
+
+                    list.innerText = dataValue;
+                    allData.push(dataValue);
+                    let delBtn = document.createElement("button");
+                    delBtn.innerText = "Delete Value";
+                    delBtn.classList.add("delete")
+                    list.appendChild(delBtn);
+                    ul.appendChild(list);
+                    data.value = "";
+                    msg.innerText = "Data Added Successfully";
+                    msg.style.color = "green"
+                } else {
+                    msg.innerText = "Data Already Present";
+                    msg.style.color = "red"
+
+                }
+
+            } else {
+                msg.innerText = "Data Is Empty";
+                msg.style.color = "red"
+
+            }
+
+            let allDeleteBtns = document.querySelectorAll(".delete");
+            console.log(allDeleteBtns);
+            for (let deleteBtn of allDeleteBtns) {
+                deleteBtn.addEventListener("click", function () {
+                    console.log(this);
+                    let parent = this.parentElement;
+                    console.log(parent);
+                    parent.remove();
+                    msg.innerText = "Data Deleted";
+                    msg.style.color = "red"
+
+                })
+            }
+
+        });
+
+        let allDeleteBtns = document.querySelectorAll(".delete");
+        console.log(allDeleteBtns);
+        for (let deleteBtn of allDeleteBtns) {
+            deleteBtn.addEventListener("click", function () {
+                console.log(this);
+                let parent = this.parentElement;
+                console.log(parent);
+                parent.remove();
+                msg.innerText = "Data Deleted";
+                msg.style.color = "red"
+
+            })
+        }
+
+
+    </script>
+
+</body>
+
+</html>
+<!-- Existing element of html if we apply event it will work
+but when we create dynamic elements from JS existing event's won't work on that newly created
+js elements 
+-->

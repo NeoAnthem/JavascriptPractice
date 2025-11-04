@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+
+<body>
+    <form action="/demo">
+
+        username:
+        <input type="text" name="user_name" id="userName">
+        <br>
+        <br>
+        password:
+        <input type="password" name="password" id="pw">
+        <br><br>
+        <input type="submit" value="Save">
+    </form>
+
+    <script>
+
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            console.log(event);
+
+            let userName = document.querySelector("#userName");
+            let password = document.querySelector("#pw");
+
+            console.log(userName.value);
+            console.log(password.value);
+
+            // api call
+        })
+
+
+    </script>
+</body>
+
+</html>

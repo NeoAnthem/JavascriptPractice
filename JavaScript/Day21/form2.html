@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <!-- Extracting Form Data  -->
+
+    <style>
+        span {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/demo">
+
+        username:
+        <input type="text" name="user_name" id="userName">
+        <br>
+        <br>
+        password:
+        <input type="password" name="password" id="pw"> <span toggleHideShow>👁️</span>
+        <br><br>
+        <input type="submit" value="Save">
+    </form>
+
+    <script>
+
+        let form = document.querySelector("form");
+        let passwordElement = document.querySelector("#pw");
+        let toggleEyeButton = document.querySelector("[toggleHideShow]");
+
+        toggleEyeButton.addEventListener("click", (event) => {
+
+            console.log(passwordElement.type);
+            if (passwordElement.type === "password") {
+                passwordElement.type = "text";
+                toggleEyeButton.textContent = "🫣";
+            } else {
+
+                passwordElement.type = "password";
+                toggleEyeButton.textContent = "👁️";
+            }
+
+            // change password type to text if click 
+            // if text -> convert to password
+        })
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            console.log(event);
+            console.log(this);
+            console.dir(this);
+
+            let formElements = this.elements
+            console.log(formElements);
+
+            let userName = formElements[0];
+            let pw = formElements[1];
+
+
+            console.log(userName.value);
+            console.log(pw.value);
+
+            // api call
+        })
+
+
+    </script>
+</body>
+
+</html>
