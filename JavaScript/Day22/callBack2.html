@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Hell</title>
+</head>
+
+<body>
+
+    <h1>Hello</h1>
+
+    <script>
+        let h1 = document.querySelector("h1");
+
+        function changeColor(color, time) {
+            setTimeout(function () {
+                h1.style.backgroundColor = color;
+
+            }, time)
+        }
+
+        // Time increases and color increases then we have to call manually
+        changeColor("Red", 2000);
+        changeColor("cyan", 3000);
+        changeColor("crimson", 4000);
+
+        // setTimeout(function () {
+        //     h1.style.backgroundColor = "red";
+
+        // }, 2000)
+        // setTimeout(function () {
+        //     h1.style.backgroundColor = "blue";
+
+        // }, 3000)
+        // setTimeout(function () {
+        //     h1.style.backgroundColor = "crimson";
+
+        // }, 4000)
+
+    </script>
+
+</body>
+
+</html>

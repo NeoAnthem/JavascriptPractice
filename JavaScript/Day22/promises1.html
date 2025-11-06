@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+</head>
+
+<body>
+    <script>
+        // Callback Hell ->
+        function saveInfo(data, success, failure) {
+            let internetSpeed = Math.floor(Math.random() * 10) + 1;// 1 to 10
+
+            console.log("Internet Speed = ", internetSpeed);
+            if (internetSpeed >= 5) {
+                success();
+            } else {
+                failure();
+            }
+        }
+
+        saveInfo("My Data", () => {
+            console.log("First Data Saved...");
+            // Save another Data
+            saveInfo("My Data 2", () => {
+                console.log("Second Data Is Also Saved...");
+                saveInfo("My Data 3", () => {
+                    console.log("Third Data Is Also Saved and Now Ending operation...");
+
+                }, () => {
+                    console.log("Failed at 3rd stage-> bcoz of slow speed");
+                })
+            }, () => {
+
+                console.log("Failed at 2nd stage-> bcoz of slow speed");
+            })
+        }, () => {
+            console.log("Failed at 1st stage-> bcoz of slow speed");
+
+        })
+
+    </script>
+</body>
+
+</html>

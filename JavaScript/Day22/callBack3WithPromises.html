@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Hell</title>
+</head>
+
+<body>
+
+    <h1>Hello</h1>
+
+    <script>
+        let h1 = document.querySelector("h1");
+
+        // Higher Order Function 
+        // nextColor parameter -> It will accept function as argument
+        function changeColor(color, time) {
+            return new Promise((resolve, reject) => {
+
+                setTimeout(function () {
+                    h1.style.backgroundColor = color;
+
+                    resolve(`Color Changed to : ${color}`);
+
+                }, time)
+            })
+        }
+
+        // Call Back Hell solve with promises
+        changeColor("red", 3000)
+            .then((result) => {
+                console.log("Results = ", result);
+
+                return changeColor("yellow", 3000);
+
+            }).then((result) => {
+                console.log("Results = ", result);
+
+                return changeColor("orange", 2000);
+            }).then((result) => {
+                console.log("Results = ", result);
+
+                return changeColor("cyan", 2000);
+            }).then((result) => {
+                console.log("Results = ", result);
+
+            });
+
+    </script>
+
+</body>
+
+</html>

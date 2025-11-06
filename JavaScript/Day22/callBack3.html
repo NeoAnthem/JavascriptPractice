@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Hell</title>
+</head>
+
+<body>
+
+    <h1>Hello</h1>
+
+    <script>
+        let h1 = document.querySelector("h1");
+
+        // Higher Order Function 
+        // nextColor parameter -> It will accept function as argument
+        function changeColor(color, time, nextColor) {
+            setTimeout(function () {
+                h1.style.backgroundColor = color;
+
+                if (nextColor) {
+                    nextColor()
+                }
+
+            }, time)
+        }
+
+        // Call Back Hell
+        changeColor("Red", 2000, () => {
+            changeColor("purple", 2000, () => {
+                changeColor("green", 2000, () => {
+                    changeColor("cyan", 2000, () => {
+                        changeColor("orange", 2000, () => {
+                            changeColor("white", 2000);
+                        });
+                    });
+                });
+            });
+        });
+
+        /*
+        Problem with call back
+        1. To many nested paranthesis and functions -> It becomes hard to maintain
+        2. It is difficult to read when logic grows
+        */
+
+        /*
+        To solve callback hell 
+        1. Promises
+        2. async await
+        */
+
+    </script>
+
+</body>
+
+</html>

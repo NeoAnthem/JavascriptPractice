@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+</head>
+
+<body>
+    <script>
+        // Callback Hell ->
+        // promise chaining
+        function saveInfo(data) {
+            return new Promise((resolve, reject) => {
+                let internetSpeed = Math.floor(Math.random() * 10) + 1;// 1 to 10
+
+                console.log("Internet Speed = ", internetSpeed);
+                console.log("Data = ", data);
+                if (internetSpeed >= 5) {
+                    resolve("Success: Data Saved Successfully");
+                } else {
+                    reject("Failed: Weak Connection")
+                }
+
+            });
+        }
+
+        // I only want single catch block
+        let request = saveInfo("My Data 1 ")
+
+        request
+            .then((result) => {
+                console.log("Promise 1 was resolve");
+                console.log("Results = ", result);
+                return saveInfo("My Data 2");
+
+            })
+            .then((result) => {
+                console.log("Promise 2 was resolve");
+                console.log(result);
+                return saveInfo("My Data 3");
+
+            })
+            .then((result) => {
+                console.log("Promise 3 was resolve");
+                console.log(result);
+
+            })
+            .catch((e) => {
+                console.log("Msg = ", e);
+                console.log("Promise was rejected");
+            })
+
+
+    </script>
+</body>
+
+</html>
