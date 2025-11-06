@@ -1,0 +1,37 @@
+<!-- 
+ async:
+ Creates a asynchronous function and by default 
+ it will return promise -> resolved -> something is returned,
+    rejected -> throws error
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        async function greet() {
+            // return "Hello All";
+            throw "Some thing bad happen"
+        }
+
+        console.log(greet());
+        greet()
+            .then((result) => {
+                console.log("Success : ", result);
+            }).catch((error) => {
+                console.log("ERROR : ", error);
+
+            })
+
+    </script>
+
+</body>
+
+</html>

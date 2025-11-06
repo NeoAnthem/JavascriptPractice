@@ -1,0 +1,52 @@
+<!-- 
+Await:
+it pauses the execution of surrounding aync functions untill the promise is settled(resolve/reject) 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getNumber() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let number = Math.floor(Math.random() * 10 + 1);
+                    console.log("Number = ", number);
+                    resolve(`Completed and number = ${number}`);
+                }, 1000);
+
+            });
+        }
+
+        let request = getNumber();
+        request
+            .then((result) => {
+                console.log(`Result = ${result}`);
+                return getNumber();
+            })
+            .then((result) => {
+                console.log(`Result = ${result}`);
+                return getNumber();
+            })
+            .then((result) => {
+                console.log(`Result = ${result}`);
+                return getNumber();
+            })
+            .then((result) => {
+                console.log(`Result = ${result}`);
+                return getNumber();
+            })
+            .then((result) => {
+                console.log(`Result = ${result}`);
+
+            })
+    </script>
+</body>
+
+</html>
