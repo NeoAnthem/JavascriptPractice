@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke API Call</title>
+</head>
+
+<body>
+
+    <script>
+        const url = "https://icanhazdadjoke.com/";
+
+        const payload = {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+
+            }
+        }
+
+        const response = fetch(url, payload)
+        console.log(response);
+        response.then((result) => {
+            console.log(result);
+            const jsonResult = result.json()
+            console.log(jsonResult);
+            jsonResult.then((data) => {
+                console.log(data);
+                console.log(data.joke);
+            })
+        }).catch((error) => {
+            console.log(error);
+        })
+    </script>
+</body>
+
+</html>

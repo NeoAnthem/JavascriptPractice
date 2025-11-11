@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke API Call</title>
+</head>
+
+<body>
+
+    <script>
+        async function getApiResponse() {
+            const url = "https://icanhazdadjoke.com/";
+
+            const payload = {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    // "x-goog-api-key": "1234"
+                }
+            }
+            try {
+                console.log("Hello Before API Call");
+                let apiResponse = await fetch(url, payload)
+                console.log(apiResponse);
+                let jsonResult = await apiResponse.json() // Promise
+                console.log(jsonResult);
+                console.log(jsonResult.joke);
+                console.log("Hello After 1st API Call");
+
+
+                // Call another time to get new Joke
+                apiResponse = await fetch(url, payload)
+                console.log(apiResponse);
+                jsonResult = await apiResponse.json() // Promise
+                console.log(jsonResult);
+                console.log(jsonResult.joke);
+                console.log("Hello After 2nd API Call");
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getApiResponse();
+    </script>
+</body>
+
+</html>
