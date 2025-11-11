@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joke Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 24px;
+            color: #333;
+        }
+
+        p {
+            margin: 20px 0;
+            color: #555;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #333;
+            color: white;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .loader {
+            width: 50px;
+            aspect-ratio: 1;
+            --_c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+            background:
+                var(--_c) top,
+                var(--_c) left,
+                var(--_c) right,
+                var(--_c) bottom;
+            background-size: 12px 12px;
+            animation: l7 1s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes l7 {
+            to {
+                transform: rotate(.5turn)
+            }
+        }
+
+        .parent {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            /* background-color: #555; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .disabled {
+            cursor: not-allowed;
+        }
+
+        .disabled:hover {
+            background: #333
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tell Me A Joke</h1>
+        <div class="box">
+            <p>This is where the joke will appear.</p>
+        </div>
+        <div class="parent">
+            <div class="loader hide">
+            </div>
+        </div>
+        <button>Change Joke</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+
+    <script>
+        let button = document.querySelector("button");
+        let para = document.querySelector("p");
+        let box = document.querySelector(".box");
+        let loader = document.querySelector(".loader");
+
+        button.addEventListener("click", function () {
+            box.classList.add("hide");
+            console.log(box.classList);
+            console.log(box);
+            loader.classList.remove("hide");
+            console.log(loader.classList);
+            console.log(loader);
+            button.setAttribute("disabled", "true");
+            button.classList.add("disabled");
+            setTimeout(async () => {
+
+                joke = await generateRandomeJoke();
+                if (joke === false) {
+                    para.textContent = "💀"
+                } else {
+
+                    para.textContent = joke;
+                }
+                box.classList.remove("hide");
+                loader.classList.add("hide");
+                button.removeAttribute("disabled");
+                button.classList.remove("disabled");
+
+            }, 5000);
+        });
+
+        async function generateRandomeJoke() {
+            let url = "https://icanhazdadjoke.com/";
+            const payload = {
+                headers: {
+                    Accept: "application/json",
+                }
+            }
+            let response = undefined;
+
+            try {
+                let apiResponse = await axios.get(url, payload);
+                response = apiResponse.data.joke;
+
+            } catch (error) {
+                console.log(error);
+                response = false
+            }
+            return response;
+        }
+
+
+    </script>
+</body>
+
+</html>
