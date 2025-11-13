@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Finder</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">🎓 College Finder</h1>
+
+        <!-- Search Form -->
+        <form id="collegeForm" class="row g-3 justify-content-center">
+            <div class="col-md-6">
+                <input type="text" id="country" class="form-control" placeholder="Enter Country">
+                <p class="text-danger hide fs-6 px-2 form-error">Please fill country.</p>
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <!-- Loader -->
+        <div class="text-center my-4 hide" selfLoader>
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Not Found -->
+        <p class="text-center text-danger mt-4 hide " notFound>No colleges found for this country.</p>
+
+        <!-- Result Table -->
+        <div class="card mt-4 hide" id="resultsCard">
+            <div class="card-body">
+                <h5 class="card-title">College List</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="colleges">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>College Name</th>
+                                <th>Country</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+
+    <script>
+
+        // Form
+        let form = document.querySelector("#collegeForm");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            let country = document.querySelector("#country").value.trim();
+            let countryError = document.querySelector(".form-error");
+
+            if (country === "") {
+                countryError.classList.remove("hide");
+            } else {
+                // search college by country
+                // add loader
+
+                let loader = document.querySelector("[selfLoader]");
+                let tableCard = document.querySelector("#resultsCard");
+                let notFound = document.querySelector("[notFound]");
+
+                // hide old data
+                tableCard.classList.add("hide");
+                notFound.classList.add("hide");
+
+                loader.classList.remove("hide");
+                countryError.classList.add("hide");
+                let response;
+                setTimeout(async () => {
+                    // Fetch Result From API
+                    response = await getCollegeLists(country);
+
+                    // console.log(response);
+
+                    loader.classList.add("hide");
+                    console.log(response);
+
+                    if (response.length === 0) {
+                        notFound.classList.remove("hide");
+                    } else {
+                        // show all colleges in table form
+                        showColleges(response);
+                    }
+
+                }, 3000)
+
+
+
+
+            }
+        })
+
+        // Logic to inject colleges in table using DOM
+        function showColleges(response) {
+            let tableBody = document.querySelector("#colleges tbody");
+            tableBody.innerHTML = "";// clear previous response
+            document.querySelector("#resultsCard").classList.remove("hide");
+
+            // we have array and in array we have objects
+            response.forEach((college) => {
+                let row = document.createElement("tr");
+                let item1 = document.createElement("td");
+
+                item1.textContent = college.name;
+
+                let item2 = document.createElement("td");
+                item2.textContent = college["country"] || "Not Available";
+
+                let item3 = document.createElement("td");
+                item3.textContent = college["state-province"] || "Not Available";
+
+                row.appendChild(item1);
+                row.appendChild(item2);
+                row.appendChild(item3);
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function getCollegeLists(country) {
+
+            let url = `http://universities.hipolabs.com/search?name=${country}`;
+
+            try {
+                let apiResponse = await axios.get(url);
+
+                // console.log(apiResponse);
+                // console.log(apiResponse.data);
+
+                return apiResponse.data;
+            } catch (error) {
+                // console.log(error);
+                return [];
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
