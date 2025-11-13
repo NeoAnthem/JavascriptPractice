@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation Project</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="card">
+        <h2>Registration Form</h2>
+        <form id="regForm" novalidate>
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input id="firstName" name="firstName" type="text" placeholder="e.g. Abdul" />
+                <i class="fa input-icon" id="icon-firstName" aria-hidden="true"></i>
+                <small class="error" id="err-firstName"></small>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input id="lastName" name="lastName" type="text" placeholder="e.g. Memon" />
+                <i class="fa input-icon" id="icon-lastName" aria-hidden="true"></i>
+                <small class="error" id="err-lastName"></small>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="name@example.com" />
+                <i class="fa input-icon" id="icon-email" aria-hidden="true"></i>
+                <small class="error" id="err-email"></small>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input id="username" name="username" type="text" placeholder="no spaces allowed" />
+                <i class="fa input-icon" id="icon-username" aria-hidden="true"></i>
+                <small class="error" id="err-username"></small>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password"
+                    placeholder="Min 8 chars, 1 uppercase, 1 number, 1 special" />
+                <button type="button" class="eye-icon" id="togglePassword" title="Show / Hide password"
+                    aria-label="Toggle password visibility">
+                    <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                </button>
+                <i class="fa input-icon" id="icon-password" aria-hidden="true" style="right:10px;"></i>
+                <small class="error" id="err-password"></small>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="">Select Country</option>
+                </select>
+                <i class="fa input-icon" id="icon-country" aria-hidden="true"></i>
+                <small class="error" id="err-country"></small>
+            </div>
+
+            <!-- City -->
+            <div class="form-group">
+                <label for="city">City</label>
+                <select id="city" name="city" disabled>
+                    <option value="">Select City</option>
+                </select>
+                <i class="fa input-icon" id="icon-city" aria-hidden="true"></i>
+                <small class="error" id="err-city"></small>
+            </div>
+
+            <!-- Phone: country code + phone input -->
+            <div class="form-group">
+                <label>Phone</label>
+                <div class="phone-row">
+                    <select id="countryCode" name="countryCode" disabled>
+                        <option value="">Select Country Code</option>
+
+                    </select>
+                    <div class="phone-input">
+                        <input id="phone" name="phone" type="text" placeholder="digits only" inputmode="numeric" />
+                        <i class="fa input-icon" id="icon-phone" aria-hidden="true" style="right:12px;"></i>
+                    </div>
+                </div>
+                <small class="error" id="err-phone"></small>
+            </div>
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input id="dob" name="dob" type="date" />
+                <i class="fa input-icon" id="icon-dob" aria-hidden="true"></i>
+                <small class="error" id="err-dob"></small>
+            </div>
+
+            <!-- Age Fields (auto-calculated) -->
+            <div class="form-group age-row">
+                <input id="ageYears" name="ageYears" type="text" placeholder="Years" readonly />
+                <input id="ageMonths" name="ageMonths" type="text" placeholder="Months" readonly />
+            </div>
+
+            <!-- Appointment Date & Time -->
+            <div class="form-group">
+                <label for="appointment">Appointment Date & Time</label>
+                <input id="appointment" name="appointment" type="datetime-local" />
+                <i class="fa input-icon" id="icon-appointment" aria-hidden="true"></i>
+                <small class="error" id="err-appointment"></small>
+            </div>
+
+
+            <!-- Submit -->
+            <div class="submit-wrap">
+                <button id="submitBtn" type="submit" disabled>Submit</button>
+                <div class="tooltip">please enter all required field.</div>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

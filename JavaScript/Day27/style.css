@@ -1,0 +1,219 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --red: #d32f2f;
+  --green: #198754;
+  --muted: #a6a6a6;
+  --border: #dcdcdc;
+  --bg: #f6f7fb;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 50%;
+  background: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+h2 {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="password"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  /* space for icon on right */
+  border-radius: 6px;
+  border: 1.8px solid var(--border);
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+  /* transition: border-color 0.12s ease, box-shadow 0.12s ease; */
+  transition: all 0.12s ease;
+}
+
+input:disabled,
+input:read-only,
+select:disabled {
+  background: #f2f2f2;
+}
+
+/* icon on the right inside input */
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
+  font-size: 18px;
+  pointer-events: none;
+  color: var(--muted);
+  display: inline-block;
+}
+
+/* separate eye icon because it must be clickable */
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 36px;
+  /* left of validation icon */
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-block;
+  background: transparent;
+  border: none;
+}
+
+.eye-icon:focus {
+  outline: none;
+}
+
+/* phone row: country code select + input side-by-side */
+.phone-row {
+  display: flex;
+  gap: 8px;
+}
+
+.phone-row select {
+  width: 100px;
+  padding: 10px;
+}
+
+.phone-row .phone-input {
+  flex: 1;
+  position: relative;
+}
+
+small.error {
+  display: block;
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 6px;
+  min-height: 16px;
+}
+
+/* Age row fields side by side */
+.age-row {
+  display: flex;
+  gap: 8px;
+}
+
+.age-row input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1.8px solid var(--border);
+  background: #f2f2f2;
+  color: #555;
+  font-size: 14px;
+  cursor: not-allowed;
+}
+
+/* valid/invalid input states */
+input.valid,
+select.valid {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.06);
+}
+
+input.invalid,
+select.invalid {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.06);
+}
+
+.input-icon.valid {
+  color: var(--green);
+}
+
+.input-icon.invalid {
+  color: var(--red);
+}
+
+/* submit + tooltip when disabled */
+.submit-wrap {
+  position: relative;
+  margin-top: 6px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 0;
+  background: #6c757d;
+  color: #fff;
+  font-size: 15px;
+  cursor: not-allowed;
+}
+
+button[type="submit"].active {
+  background: #0d6efd;
+  cursor: pointer;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(100% + 8px);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 6px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* show tooltip when hovering a disabled button */
+button[disabled]:hover + .tooltip {
+  display: block;
+}
+
+/* small responsive */
+@media (max-width: 460px) {
+  .card {
+    width: 100%;
+  }
+
+  .eye-icon {
+    right: 44px;
+  }
+}
