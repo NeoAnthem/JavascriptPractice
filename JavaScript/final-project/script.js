@@ -46,6 +46,25 @@ form.addEventListener("submit", (event) => {
   }
 });
 
+// helper function to fetch flag by country name
+async function getFlag(countryName) {
+  try {
+    const response = await axios.get(
+      `https://restcountries.com/v3.1/name/${countryName}?fullText=true`
+    );
+    const data = response.data;
+    // console.log(data);
+
+    if (Array.isArray(data) && data.length > 0) {
+      // return flag image url
+      return data[0].flags.png || data[0]["flags"]["svg"];
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  return "fallback.png";
+}
+
 async function fetchWeatherInfo(cityValue, daysValue) {
   loader.classList.remove("hide");
 
@@ -63,14 +82,57 @@ async function fetchWeatherInfo(cityValue, daysValue) {
       }
     );
     const data = apiResponse.data;
-    console.log(data);
+    // console.log(data);
+
+    // get Flag
+    const flagImage = await getFlag(data.location.country);
+    // console.log(flagImage);
 
     const date = new Date(data.location.localtime_epoch * 1000);
 
-    console.log(date);
+    // convert to 12 hour format
+
+    const formattedTime = date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+
+    let htmlContent = `
+    <h2>${data.location.name}, ${data.location.region}, ${data.location.country}</h2>
+
+    <img class="flag-image" src="${flagImage}" alt="Flag Icon">
+    <h3>${formattedTime}</h3>
+    <p>Current: ${data.current.temp_c}℃, ${data.current.condition.text}</p>
+    <p>Wind Speed: ${data.current.wind_mph} m/h</p>
+    <p>Cloud: ${data.current.cloud}%</p>
+    <p>Humidity: ${data.current.humidity}%</p>
+    <img src="${data.current.condition.icon}" alt="Cloud Icon">
+    <h3>Forecast</h3>
+    `;
+    data.forecast.forecastday.forEach((day) => {
+      htmlContent =
+        htmlContent +
+        `
+        <div class="forecast-item">
+        <strong>
+          ${day.date}
+        </strong>
+        <br>
+        </div>
+      `;
+    });
+    weatherDiv.innerHTML = htmlContent;
+    weatherDiv.classList.add("show");
+    loader.classList.add("hide");
   } catch (error) {
     weatherDiv.innerHTML =
       "<p style='color:red;'>Error fetching data. Try again</p>";
     weatherDiv.classList.add("show");
+    loader.classList.add("hide");
   }
 }
