@@ -18,4 +18,5 @@ console.log(`Value of PI is ${PI}`);
 
 // var -> old syntax to initialize variable before 2015
 
+
 // let and var scope
