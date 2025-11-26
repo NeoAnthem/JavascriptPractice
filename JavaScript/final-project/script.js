@@ -102,7 +102,13 @@ async function fetchWeatherInfo(cityValue, daysValue) {
       hour12: true,
     });
 
-    let htmlContent = `
+    setTimeout(() => {
+      if (cityValue.includes(",")) {
+        cityInput.value = data.location.name;
+      } else {
+        cityInput.value = cityValue;
+      }
+      let htmlContent = `
     <h2>${data.location.name}, ${data.location.region}, ${data.location.country}</h2>
 
     <img class="flag-image" src="${flagImage}" alt="Flag Icon">
@@ -114,25 +120,57 @@ async function fetchWeatherInfo(cityValue, daysValue) {
     <img src="${data.current.condition.icon}" alt="Cloud Icon">
     <h3>Forecast</h3>
     `;
-    data.forecast.forecastday.forEach((day) => {
-      htmlContent =
-        htmlContent +
-        `
+      data.forecast.forecastday.forEach((day) => {
+        htmlContent =
+          htmlContent +
+          `
         <div class="forecast-item">
         <strong>
           ${day.date}
         </strong>
         <br>
+        ${day.day.condition.text}
+        <br>
+        Max: ${day.day.maxtemp_c}℃, Min: ${day.day.mintemp_c}℃ 
+        <br>
+        <img src= "${day.day.condition.icon}" alt="Cloud Icon">
         </div>
       `;
-    });
-    weatherDiv.innerHTML = htmlContent;
-    weatherDiv.classList.add("show");
-    loader.classList.add("hide");
+      });
+      weatherDiv.innerHTML = htmlContent;
+      weatherDiv.classList.add("show");
+      loader.classList.add("hide");
+    }, 3000);
   } catch (error) {
-    weatherDiv.innerHTML =
-      "<p style='color:red;'>Error fetching data. Try again</p>";
+    weatherDiv.innerHTML = `
+      <img class="error" src = "error.png">
+      <p style='color:red;'>Error fetching data. Try again</p>`;
     weatherDiv.classList.add("show");
     loader.classList.add("hide");
   }
 }
+
+document.querySelector("#currentLocationBtn").addEventListener("click", () => {
+  // Forecast Days Validations
+  const days = daysInput.value;
+  const daysValid = validateDaysInput(days);
+  if (!daysValid) {
+    validateCityInput("No Validate");
+    return;
+  }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        fetchWeatherInfo(
+          `${position.coords.latitude},${position.coords.longitude}`,
+          days
+        );
+      },
+      () => {
+        alert("Please allow Current Location");
+      }
+    );
+  } else {
+    alert("Current Location Not Supported");
+  }
+});
